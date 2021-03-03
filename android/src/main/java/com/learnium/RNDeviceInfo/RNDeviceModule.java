@@ -686,8 +686,18 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     try {
       if (Build.VERSION.SDK_INT >= 26) {
         if (getReactApplicationContext().checkCallingOrSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-          return Build.getSerial();
+        String serial = null;
+        Class<?> c = Class.forName("android.os.SystemProperties");
+        Method get = c.getMethod("get", String.class, String.class);
+        serial = (String) get.invoke(c, "ril.serialnumber", Build.SERIAL);
+        return serial;
         }
+      } else {
+          String serial = null;
+        Class<?> c = Class.forName("android.os.SystemProperties");
+        Method get = c.getMethod("get", String.class, String.class);
+        serial = (String) get.invoke(c, "ril.serialnumber", Build.SERIAL);
+        return serial;
       }
     } catch (Exception e) {
       // This is almost always a PermissionException. We will log it but return unknown
