@@ -23,7 +23,7 @@ public class DeviceTypeResolver {
   }
 
   public boolean isTablet() {
-    return getDeviceType() == DeviceType.TABLET;
+    return true;
   }
 
   public DeviceType getDeviceType() {
